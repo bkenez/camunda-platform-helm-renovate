@@ -10,34 +10,32 @@
   ],
   dependencyDashboard: true,
   separateMinorPatch: true,
-  // Rate limiting and PR management
   prHourlyLimit: 6,
   prConcurrentLimit: 20,
-  recreateWhen: 'always', // Recreate grouped PRs when new updates arrive
-  rebaseWhen: 'behind-base-branch', // Auto-rebase when behind
+  recreateWhen: 'always',
+  rebaseWhen: 'behind-base-branch',
   commitBodyTable: true,
   separateMajorMinor: false,
-  // Automerge safety: Wait for all status checks before merging
-  ignoreTests: false, // Explicitly wait for status checks to pass
-  prCreation: 'not-pending', // Don't create PR until status checks exist
+  ignoreTests: false,
+  prCreation: 'not-pending',
   prBodyNotes: [
     '{{#if isMajor}}:warning: THIS IS A MAJOR VERSION UPDATE :warning:{{/if}}',
     'Before merging, *always* check with the release notes if any other changes need to be done.',
   ],
+  // Global grouping strategy: minor and patch updates batched, major updates separate
   major: {
     enabled: true,
     addLabels: ['upgrade:major'],
-    // No groupName - each major gets its own PR
   },
   minor: {
     enabled: true,
     addLabels: ['upgrade:minor'],
-    groupName: 'minor-updates', // Group ALL minor updates together
+    groupName: 'minor-updates',
   },
   patch: {
     enabled: true,
     addLabels: ['upgrade:patch'],
-    groupName: 'patch-updates', // Group ALL patch updates together
+    groupName: 'patch-updates',
   },
   vulnerabilityAlerts: {
     addLabels: ['security'],
@@ -62,84 +60,55 @@
     },
   },
   packageRules: [
-    //
-    // Safety: Require manual approval for major updates.
+    // Major updates: manual review required, scheduled for Friday nights
     {
-      description: 'Require manual approval for major updates (e.g., ES 9, PG 18) to prevent breaking changes without maintainer review.',
+      description: 'Major updates require manual review to prevent breaking changes.',
       matchUpdateTypes: ['major'],
       automerge: false,
       platformAutomerge: false,
-      dependencyDashboardApproval: false, // Create PR immediately but don't automerge
+      dependencyDashboardApproval: false,
       addLabels: ['requires-manual-review'],
     },
-    //
-    // Scheduling by update type to spread PRs across the weekend.
     {
-      description: 'Only update major versions on Fridays outside of business hours.',
+      description: 'Schedule major updates for Friday nights.',
       matchUpdateTypes: ['major'],
-      schedule: ['* 0-6,18-23 * * 5'], // Friday nights
+      schedule: ['* 0-6,18-23 * * 5'],
     },
     {
-      description: 'Only update minor versions on Saturdays.',
+      description: 'Schedule minor updates for Saturdays.',
       matchUpdateTypes: ['minor'],
       schedule: ['* * * * 6'],
     },
     {
-      description: 'Only update patch versions on Sundays.',
+      description: 'Schedule patch/digest updates for Sundays.',
       matchUpdateTypes: ['pin', 'digest', 'patch'],
       schedule: ['* * * * 0'],
     },
-    //
-    // Infraex-style batching: Global minor/patch grouping handles all updates.
-    // Category-specific labels and schedules below.
-    //
-    // Digest updates batch (across all charts)
+    // Digest updates get their own group
     {
       groupName: 'digest-updates',
-      description: 'Batch all digest updates into one PR',
-      matchUpdateTypes: [
-        'digest',
-      ],
-      addLabels: [
-        'upgrade:digest',
-      ],
+      matchUpdateTypes: ['digest'],
+      addLabels: ['upgrade:digest'],
       pinDigests: true,
     },
-    // Charts - just add labels, global minor/patch grouping handles the rest
+    // Category labels for better PR organization
     {
-      addLabels: [
-        'deps/charts',
-      ],
+      addLabels: ['deps/charts'],
       matchFileNames: [
         'charts/*/Chart.yaml',
         'charts/*/values*.yaml',
         'charts/*/go.*',
       ],
     },
-    //
-    // Tools - just add labels and schedule
     {
-      addLabels: [
-        'deps/tools',
-      ],
-      matchFileNames: [
-        '.tool-versions',
-      ],
-      schedule: [
-        'every weekend',
-      ],
+      addLabels: ['deps/tools'],
+      matchFileNames: ['.tool-versions'],
+      schedule: ['every weekend'],
     },
-    // GitHub Actions - just add labels and schedule
     {
-      addLabels: [
-        'deps/github-actions',
-      ],
-      matchManagers: [
-        'github-actions',
-      ],
-      schedule: [
-        'every weekend',
-      ],
+      addLabels: ['deps/github-actions'],
+      matchManagers: ['github-actions'],
+      schedule: ['every weekend'],
     },
     // Limit tools and libs versions to the actual Distro CI Kubernetes cluster.
     {
@@ -165,37 +134,25 @@
       ],
       extractVersion: '^(?<version>v.*)$',
     },
-    //
-    // Camunda charts.
+    // Camunda chart version policies
     {
-      // Disable major version update for all Helm components.
+      description: 'Disable major updates for Helm dependencies to prevent breaking changes.',
       enabled: false,
-      matchManagers: [
-        'helmv3',
-        'helm-values',
-        'custom.regex',
-      ],
-      matchUpdateTypes: [
-        'major',
-      ],
+      matchManagers: ['helmv3', 'helm-values', 'custom.regex'],
+      matchUpdateTypes: ['major'],
     },
     {
-      // Disable app minor version update in the previous Camunda Helm charts.
+      description: 'Disable minor updates for Camunda components in previous chart versions.',
       enabled: false,
-      matchPackageNames: [
-        '/.*camunda/[.-]*/',
-        '/registry.camunda.cloud/[.-/]*/',
-      ],
+      matchPackageNames: ['/.*camunda/[.-]*/', '/registry.camunda.cloud/[.-/]*/'],
       matchFileNames: [
         'charts/camunda-platform-8.*/values.yaml',
         'charts/camunda-platform-8.*/values-latest.yaml',
       ],
-      matchUpdateTypes: [
-        'minor',
-      ],
+      matchUpdateTypes: ['minor'],
     },
     {
-      // This docker image appears to require authentication, and is only used for 8.2 HC's so I'm disabling it to prevent issues with renovate.
+      description: 'Disable archived Elasticsearch curator image.',
       enabled: false,
       matchPackageNames: [
         'bitnamilegacy/elasticsearch-curator-archived',
@@ -203,24 +160,17 @@
       ],
     },
     {
-      // Enable app patch version update in the previous Camunda Helm charts.
-      matchDatasources: [
-        'helmv3',
-        'helm-values',
-        'docker',
-        'regex',
-      ],
+      description: 'Enable patch updates for Camunda components in previous chart versions.',
+      matchDatasources: ['helmv3', 'helm-values', 'docker', 'regex'],
       matchFileNames: [
         'charts/camunda-platform-8.*/values.yaml',
         'charts/camunda-platform-8.*/values-latest.yaml',
       ],
-      matchUpdateTypes: [
-        'patch',
-      ],
+      matchUpdateTypes: ['patch'],
     },
-    // Limit Elasticsearch version to latest supported version in Camunda 8.3 chart.
-    // https://docs.camunda.io/docs/8.3/reference/supported-environments/#camunda-8-self-managed
+    // Elasticsearch version constraints per chart version
     {
+      description: 'Camunda 8.3: Limit Elasticsearch to 8.13.x',
       matchDatasources: [
         'docker',
       ],
