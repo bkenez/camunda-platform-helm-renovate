@@ -17,7 +17,7 @@
   commitBodyTable: true,
   separateMajorMinor: false,
   ignoreTests: false,
-  prCreation: 'immediate',  // TEMP for testing
+  prCreation: 'not-pending',
   prBodyNotes: [
     '{{#if isMajor}}:warning: THIS IS A MAJOR VERSION UPDATE :warning:{{/if}}',
     'Before merging, *always* check with the release notes if any other changes need to be done.',
@@ -69,22 +69,21 @@
       dependencyDashboardApproval: false,
       addLabels: ['requires-manual-review'],
     },
-    // TEMP DISABLED
-    // {
-    //   description: 'Schedule major updates for Friday nights.',
-    //   matchUpdateTypes: ['major'],
-    //   schedule: ['* 0-6,18-23 * * 5'],
-    // },
-    // {
-    //   description: 'Schedule minor updates for Saturdays.',
-    //   matchUpdateTypes: ['minor'],
-    //   schedule: ['* * * * 6'],
-    // },
-    // {
-    //   description: 'Schedule patch/digest updates for Sundays.',
-    //   matchUpdateTypes: ['pin', 'digest', 'patch'],
-    //   schedule: ['* * * * 0'],
-    // },
+    {
+      description: 'Schedule major updates for Friday nights.',
+      matchUpdateTypes: ['major'],
+      schedule: ['* 0-6,18-23 * * 5'],
+    },
+    {
+      description: 'Schedule minor updates for Saturdays.',
+      matchUpdateTypes: ['minor'],
+      schedule: ['* * * * 6'],
+    },
+    {
+      description: 'Schedule patch/digest updates for Sundays.',
+      matchUpdateTypes: ['pin', 'digest', 'patch'],
+      schedule: ['* * * * 0'],
+    },
     // Digest updates: add label and enable pinning, but group with patches
     {
       matchUpdateTypes: ['digest'],
@@ -100,17 +99,16 @@
         'charts/*/go.*',
       ],
     },
-    // TEMP DISABLED
-    // {
-    //   addLabels: ['deps/tools'],
-    //   matchFileNames: ['.tool-versions'],
-    //   schedule: ['every weekend'],
-    // },
-    // {
-    //   addLabels: ['deps/github-actions'],
-    //   matchManagers: ['github-actions'],
-    //   schedule: ['every weekend'],
-    // },
+    {
+      addLabels: ['deps/tools'],
+      matchFileNames: ['.tool-versions'],
+      schedule: ['every weekend'],
+    },
+    {
+      addLabels: ['deps/github-actions'],
+      matchManagers: ['github-actions'],
+      schedule: ['every weekend'],
+    },
     // Limit tools and libs versions to the actual Distro CI Kubernetes cluster.
     {
       allowedVersions: '<1.28.0',
