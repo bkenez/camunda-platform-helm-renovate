@@ -99,6 +99,14 @@
       matchFileNames: [
         'charts/camunda-platform-8.2/Chart.yaml',
         'charts/camunda-platform-8.2/values*.yaml',
+        'charts/camunda-platform-8.2/go.*',
+      ],
+      matchManagers: [
+        'helmv3',
+        'helm-values',
+        'docker',
+        'regex',
+        'gomod',
       ],
       matchUpdateTypes: [
         'patch',
@@ -115,6 +123,14 @@
       matchFileNames: [
         'charts/camunda-platform-8.3/Chart.yaml',
         'charts/camunda-platform-8.3/values*.yaml',
+        'charts/camunda-platform-8.3/go.*',
+      ],
+      matchManagers: [
+        'helmv3',
+        'helm-values',
+        'docker',
+        'regex',
+        'gomod',
       ],
       matchUpdateTypes: [
         'patch',
@@ -131,6 +147,14 @@
       matchFileNames: [
         'charts/camunda-platform-8.4/Chart.yaml',
         'charts/camunda-platform-8.4/values*.yaml',
+        'charts/camunda-platform-8.4/go.*',
+      ],
+      matchManagers: [
+        'helmv3',
+        'helm-values',
+        'docker',
+        'regex',
+        'gomod',
       ],
       matchUpdateTypes: [
         'patch',
@@ -147,6 +171,14 @@
       matchFileNames: [
         'charts/camunda-platform-8.5/Chart.yaml',
         'charts/camunda-platform-8.5/values*.yaml',
+        'charts/camunda-platform-8.5/go.*',
+      ],
+      matchManagers: [
+        'helmv3',
+        'helm-values',
+        'docker',
+        'regex',
+        'gomod',
       ],
       matchUpdateTypes: [
         'patch',
@@ -163,6 +195,14 @@
       matchFileNames: [
         'charts/camunda-platform-8.6/Chart.yaml',
         'charts/camunda-platform-8.6/values*.yaml',
+        'charts/camunda-platform-8.6/go.*',
+      ],
+      matchManagers: [
+        'helmv3',
+        'helm-values',
+        'docker',
+        'regex',
+        'gomod',
       ],
       matchUpdateTypes: [
         'patch',
@@ -179,6 +219,14 @@
       matchFileNames: [
         'charts/camunda-platform-8.7/Chart.yaml',
         'charts/camunda-platform-8.7/values*.yaml',
+        'charts/camunda-platform-8.7/go.*',
+      ],
+      matchManagers: [
+        'helmv3',
+        'helm-values',
+        'docker',
+        'regex',
+        'gomod',
       ],
       matchUpdateTypes: [
         'patch',
@@ -196,6 +244,13 @@
         'charts/camunda-platform-8.8/Chart.yaml',
         'charts/camunda-platform-8.8/values*.yaml',
         'charts/camunda-platform-8.8/go.*',
+      ],
+      matchManagers: [
+        'helmv3',
+        'helm-values',
+        'docker',
+        'regex',
+        'gomod',
       ],
       matchUpdateTypes: [
         'major',
@@ -231,6 +286,13 @@
         'charts/camunda-platform-8.9/Chart.yaml',
         'charts/camunda-platform-8.9/values*.yaml',
         'charts/camunda-platform-8.9/go.*',
+      ],
+      matchManagers: [
+        'helmv3',
+        'helm-values',
+        'docker',
+        'regex',
+        'gomod',
       ],
       matchUpdateTypes: [
         'major',
