@@ -71,7 +71,7 @@ identityKeycloak:
   # https://hub.docker.com/r/bitnami/keycloak/tags
   image:
     repository: camunda/keycloak
-    tag: 25.0.6
+    tag: 24.0.0
   postgresql:
     # https://hub.docker.com/r/bitnami/postgresql/tags
     image:
