@@ -60,30 +60,30 @@
     },
   },
   packageRules: [
-    // Major updates: manual review required, scheduled for Friday nights
-    {
-      description: 'Major updates require manual review to prevent breaking changes.',
-      matchUpdateTypes: ['major'],
-      automerge: false,
-      platformAutomerge: false,
-      dependencyDashboardApproval: false,
-      addLabels: ['requires-manual-review'],
-    },
-    {
-      description: 'Schedule major updates for Friday nights.',
-      matchUpdateTypes: ['major'],
-      schedule: ['* 0-6,18-23 * * 5'],
-    },
-    {
-      description: 'Schedule minor updates for Saturdays.',
-      matchUpdateTypes: ['minor'],
-      schedule: ['* * * * 6'],
-    },
-    {
-      description: 'Schedule patch/digest updates for Sundays.',
-      matchUpdateTypes: ['pin', 'digest', 'patch'],
-      schedule: ['* * * * 0'],
-    },
+    // TEMPORARILY DISABLED FOR TESTING - Major updates: manual review required, scheduled for Friday nights
+    // {
+    //   description: 'Major updates require manual review to prevent breaking changes.',
+    //   matchUpdateTypes: ['major'],
+    //   automerge: false,
+    //   platformAutomerge: false,
+    //   dependencyDashboardApproval: false,
+    //   addLabels: ['requires-manual-review'],
+    // },
+    // {
+    //   description: 'Schedule major updates for Friday nights.',
+    //   matchUpdateTypes: ['major'],
+    //   schedule: ['* 0-6,18-23 * * 5'],
+    // },
+    // {
+    //   description: 'Schedule minor updates for Saturdays.',
+    //   matchUpdateTypes: ['minor'],
+    //   schedule: ['* * * * 6'],
+    // },
+    // {
+    //   description: 'Schedule patch/digest updates for Sundays.',
+    //   matchUpdateTypes: ['pin', 'digest', 'patch'],
+    //   schedule: ['* * * * 0'],
+    // },
     // Digest updates get their own group
     {
       groupName: 'digest-updates',
@@ -100,16 +100,17 @@
         'charts/*/go.*',
       ],
     },
-    {
-      addLabels: ['deps/tools'],
-      matchFileNames: ['.tool-versions'],
-      schedule: ['every weekend'],
-    },
-    {
-      addLabels: ['deps/github-actions'],
-      matchManagers: ['github-actions'],
-      schedule: ['every weekend'],
-    },
+    // TEMPORARILY DISABLED FOR TESTING
+    // {
+    //   addLabels: ['deps/tools'],
+    //   matchFileNames: ['.tool-versions'],
+    //   schedule: ['every weekend'],
+    // },
+    // {
+    //   addLabels: ['deps/github-actions'],
+    //   matchManagers: ['github-actions'],
+    //   schedule: ['every weekend'],
+    // },
     // Limit tools and libs versions to the actual Distro CI Kubernetes cluster.
     {
       allowedVersions: '<1.28.0',
