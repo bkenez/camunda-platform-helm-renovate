@@ -60,25 +60,28 @@
     },
   },
   packageRules: [
-    // TEMPORARILY DISABLED FOR TESTING - Major updates: manual review required, scheduled for Friday nights
-    // {
-    //   description: 'Major updates require manual review to prevent breaking changes.',
-    //   matchUpdateTypes: ['major'],
-    //   automerge: false,
-    //   platformAutomerge: false,
-    //   dependencyDashboardApproval: false,
-    //   addLabels: ['requires-manual-review'],
-    // },
+    // Major updates: manual review required - SCHEDULE TEMPORARILY DISABLED FOR TESTING
+    {
+      description: 'Major updates require manual review to prevent breaking changes.',
+      matchUpdateTypes: ['major'],
+      automerge: false,
+      platformAutomerge: false,
+      dependencyDashboardApproval: false,
+      addLabels: ['requires-manual-review'],
+    },
+    // TEMP DISABLED: Schedule major updates for Friday nights
     // {
     //   description: 'Schedule major updates for Friday nights.',
     //   matchUpdateTypes: ['major'],
     //   schedule: ['* 0-6,18-23 * * 5'],
     // },
+    // TEMP DISABLED: Schedule minor updates for Saturdays
     // {
     //   description: 'Schedule minor updates for Saturdays.',
     //   matchUpdateTypes: ['minor'],
     //   schedule: ['* * * * 6'],
     // },
+    // TEMP DISABLED: Schedule patch/digest updates for Sundays
     // {
     //   description: 'Schedule patch/digest updates for Sundays.',
     //   matchUpdateTypes: ['pin', 'digest', 'patch'],
