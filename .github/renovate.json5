@@ -17,7 +17,7 @@
   commitBodyTable: true,
   separateMajorMinor: false,
   ignoreTests: false,
-  prCreation: 'not-pending',
+  prCreation: 'immediate',  // TEMP: Changed from 'not-pending' for testing
   prBodyNotes: [
     '{{#if isMajor}}:warning: THIS IS A MAJOR VERSION UPDATE :warning:{{/if}}',
     'Before merging, *always* check with the release notes if any other changes need to be done.',
