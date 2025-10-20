@@ -10,10 +10,34 @@
   ],
   dependencyDashboard: true,
   separateMinorPatch: true,
+  // Rate limiting and PR management
+  prHourlyLimit: 6,
+  prConcurrentLimit: 20,
+  recreateWhen: 'always', // Recreate grouped PRs when new updates arrive
+  rebaseWhen: 'behind-base-branch', // Auto-rebase when behind
+  commitBodyTable: true,
+  separateMajorMinor: false,
+  // Automerge safety: Wait for all status checks before merging
+  ignoreTests: false, // Explicitly wait for status checks to pass
+  prCreation: 'not-pending', // Don't create PR until status checks exist
+  prBodyNotes: [
+    '{{#if isMajor}}:warning: THIS IS A MAJOR VERSION UPDATE :warning:{{/if}}',
+    'Before merging, *always* check with the release notes if any other changes need to be done.',
+  ],
+  major: {
+    enabled: true,
+    addLabels: ['upgrade:major'],
+  },
   minor: {
     enabled: true,
+    addLabels: ['upgrade:minor'],
   },
   patch: {
+    enabled: true,
+    addLabels: ['upgrade:patch'],
+  },
+  vulnerabilityAlerts: {
+    addLabels: ['security'],
     enabled: true,
   },
   'helm-values': {
@@ -35,6 +59,33 @@
     },
   },
   packageRules: [
+    //
+    // Safety: Require manual approval for major updates.
+    {
+      description: 'Require manual approval for major updates (e.g., ES 9, PG 18) to prevent breaking changes without maintainer review.',
+      matchUpdateTypes: ['major'],
+      automerge: false,
+      platformAutomerge: false,
+      dependencyDashboardApproval: false, // Create PR immediately but don't automerge
+      addLabels: ['requires-manual-review'],
+    },
+    //
+    // Scheduling by update type to spread PRs across the weekend.
+    {
+      description: 'Only update major versions on Fridays outside of business hours.',
+      matchUpdateTypes: ['major'],
+      schedule: ['* 0-6,18-23 * * 5'], // Friday nights
+    },
+    {
+      description: 'Only update minor versions on Saturdays.',
+      matchUpdateTypes: ['minor'],
+      schedule: ['* * * * 6'],
+    },
+    {
+      description: 'Only update patch versions on Sundays.',
+      matchUpdateTypes: ['pin', 'digest', 'patch'],
+      schedule: ['* * * * 0'],
+    },
     //
     // Main groups.
     // This section should be updated with the Camunda supported versions.
@@ -510,10 +561,12 @@
         'automation/renovatebot',
         'kind/chore',
       ],
-      // The platformAutomerge value should be false to avoid having the renovatebot PRs merged
-      // without all checks passed.
+      // Use Renovate's automerge (not GitHub's platformAutomerge)
+      // Renovate waits for all status checks by default, which works with dynamic checks per chart version
       platformAutomerge: false,
       automerge: true,
+      automergeType: 'pr', // Merge via PR to respect GitHub settings
+      ignoreTests: false, // Wait for all status checks to pass
     },
     // This package name is used by the initContainer for keycloak in v8.5, and doesn't make sense to
     // be processed by renovate because it requires helm templating to render the real image name.
