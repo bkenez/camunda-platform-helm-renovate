@@ -93,15 +93,15 @@
     // Chart versions batch (minor updates across all charts)
     {
       groupName: 'charts-minor-updates',
-      description: 'Batch all minor version updates across all chart versions into one PR',
+      description: 'Batch all minor version updates across all charts into one PR',
       addLabels: [
         'deps/charts',
         'upgrade:minor',
       ],
       matchFileNames: [
-        'charts/camunda-platform-*/Chart.yaml',
-        'charts/camunda-platform-*/values*.yaml',
-        'charts/camunda-platform-*/go.*',
+        'charts/*/Chart.yaml',
+        'charts/*/values*.yaml',
+        'charts/*/go.*',
       ],
       matchUpdateTypes: [
         'minor',
@@ -111,15 +111,15 @@
     // Chart versions batch (patch updates across all charts)
     {
       groupName: 'charts-patch-updates',
-      description: 'Batch all patch version updates across all chart versions into one PR',
+      description: 'Batch all patch version updates across all charts into one PR',
       addLabels: [
         'deps/charts',
         'upgrade:patch',
       ],
       matchFileNames: [
-        'charts/camunda-platform-*/Chart.yaml',
-        'charts/camunda-platform-*/values*.yaml',
-        'charts/camunda-platform-*/go.*',
+        'charts/*/Chart.yaml',
+        'charts/*/values*.yaml',
+        'charts/*/go.*',
       ],
       matchUpdateTypes: [
         'patch',
@@ -130,7 +130,7 @@
     // Digest updates batch (across all charts)
     {
       groupName: 'charts-digest-updates',
-      description: 'Batch all digest updates across all chart versions into one PR',
+      description: 'Batch all digest updates across all charts into one PR',
       matchManagers: [
         'regex',
       ],
@@ -139,7 +139,7 @@
         'upgrade:digest',
       ],
       matchFileNames: [
-        'charts/camunda-platform-*/values-digest.yaml',
+        'charts/*/values-digest.yaml',
       ],
       matchUpdateTypes: [
         'digest',
@@ -149,21 +149,6 @@
     // Major updates still separate (safety requires per-dependency review)
     // These will NOT be grouped and require manual review via the major packageRule above
 
-    //
-    // Other groups.
-    {
-      groupName: 'bitnami-web-modeler-postgresql',
-      addLabels: [
-        'deps/charts',
-      ],
-      matchFileNames: [
-        'charts/web-modeler-postgresql/**',
-      ],
-      matchUpdateTypes: [
-        'minor',
-        'patch',
-      ],
-    },
     //
     // Tools.
     {
