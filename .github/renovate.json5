@@ -152,24 +152,100 @@
     //
     // Tools.
     {
-      groupName: 'tool-versions',
+      groupName: 'tool-versions-minor',
       addLabels: [
         'deps/tools',
+        'upgrade:minor',
       ],
       matchFileNames: [
         '.tool-versions',
+      ],
+      matchUpdateTypes: [
+        'minor',
       ],
       schedule: [
         'every weekend',
       ],
     },
     {
-      groupName: 'github-actions',
+      groupName: 'tool-versions-patch',
+      addLabels: [
+        'deps/tools',
+        'upgrade:patch',
+      ],
+      matchFileNames: [
+        '.tool-versions',
+      ],
+      matchUpdateTypes: [
+        'patch',
+        'pin',
+        'digest',
+      ],
+      schedule: [
+        'every weekend',
+      ],
+    },
+    // Major tool updates get separate PRs (no groupName)
+    {
+      addLabels: [
+        'deps/tools',
+        'upgrade:major',
+      ],
+      matchFileNames: [
+        '.tool-versions',
+      ],
+      matchUpdateTypes: [
+        'major',
+      ],
+      schedule: [
+        'every weekend',
+      ],
+    },
+    {
+      groupName: 'github-actions-minor',
       addLabels: [
         'deps/github-actions',
+        'upgrade:minor',
       ],
       matchManagers: [
         'github-actions',
+      ],
+      matchUpdateTypes: [
+        'minor',
+      ],
+      schedule: [
+        'every weekend',
+      ],
+    },
+    {
+      groupName: 'github-actions-patch',
+      addLabels: [
+        'deps/github-actions',
+        'upgrade:patch',
+      ],
+      matchManagers: [
+        'github-actions',
+      ],
+      matchUpdateTypes: [
+        'patch',
+        'pin',
+        'digest',
+      ],
+      schedule: [
+        'every weekend',
+      ],
+    },
+    // Major GitHub Actions updates get separate PRs (no groupName)
+    {
+      addLabels: [
+        'deps/github-actions',
+        'upgrade:major',
+      ],
+      matchManagers: [
+        'github-actions',
+      ],
+      matchUpdateTypes: [
+        'major',
       ],
       schedule: [
         'every weekend',
