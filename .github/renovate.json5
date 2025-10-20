@@ -87,176 +87,67 @@
       schedule: ['* * * * 0'],
     },
     //
-    // Main groups.
-    // This section should be updated with the Camunda supported versions.
-    // Start of minor cycle chores.
+    // Infraex-style batching: Group all chart versions by update type to reduce PR noise.
+    // This creates ~4 PRs total instead of ~12-14 per-chart PRs.
+    //
+    // Chart versions batch (minor updates across all charts)
     {
-      groupName: 'camunda-platform-8.2',
+      groupName: 'charts-minor-updates',
+      description: 'Batch all minor version updates across all chart versions into one PR',
       addLabels: [
-        'version/8.2',
         'deps/charts',
+        'upgrade:minor',
       ],
       matchFileNames: [
-        'charts/camunda-platform-8.2/Chart.yaml',
-        'charts/camunda-platform-8.2/values*.yaml',
+        'charts/camunda-platform-*/Chart.yaml',
+        'charts/camunda-platform-*/values*.yaml',
+        'charts/camunda-platform-*/go.*',
       ],
       matchUpdateTypes: [
-        'patch',
-        'pin',
-      ],
-      pinDigests: false,
-    },
-    {
-      groupName: 'camunda-platform-8.3',
-      addLabels: [
-        'version/8.3',
-        'deps/charts',
-      ],
-      matchFileNames: [
-        'charts/camunda-platform-8.3/Chart.yaml',
-        'charts/camunda-platform-8.3/values*.yaml',
-      ],
-      matchUpdateTypes: [
-        'patch',
-        'pin',
-      ],
-      pinDigests: false,
-    },
-    {
-      groupName: 'camunda-platform-8.4',
-      addLabels: [
-        'version/8.4',
-        'deps/charts',
-      ],
-      matchFileNames: [
-        'charts/camunda-platform-8.4/Chart.yaml',
-        'charts/camunda-platform-8.4/values*.yaml',
-      ],
-      matchUpdateTypes: [
-        'patch',
-        'pin',
-      ],
-      pinDigests: false,
-    },
-    {
-      groupName: 'camunda-platform-8.5',
-      addLabels: [
-        'version/8.5',
-        'deps/charts',
-      ],
-      matchFileNames: [
-        'charts/camunda-platform-8.5/Chart.yaml',
-        'charts/camunda-platform-8.5/values*.yaml',
-      ],
-      matchUpdateTypes: [
-        'patch',
-        'pin',
-      ],
-      pinDigests: false,
-    },
-    {
-      groupName: 'camunda-platform-8.6',
-      addLabels: [
-        'version/8.6',
-        'deps/charts',
-      ],
-      matchFileNames: [
-        'charts/camunda-platform-8.6/Chart.yaml',
-        'charts/camunda-platform-8.6/values*.yaml',
-      ],
-      matchUpdateTypes: [
-        'patch',
-        'pin',
-      ],
-      pinDigests: false,
-    },
-    {
-      groupName: 'camunda-platform-8.7',
-      addLabels: [
-        'version/8.7',
-        'deps/charts',
-      ],
-      matchFileNames: [
-        'charts/camunda-platform-8.7/Chart.yaml',
-        'charts/camunda-platform-8.7/values*.yaml',
-      ],
-      matchUpdateTypes: [
-        'patch',
-        'pin',
-      ],
-      pinDigests: false,
-    },
-    {
-      groupName: 'camunda-platform-8.8',
-      addLabels: [
-        'version/8.8',
-        'deps/charts',
-      ],
-      matchFileNames: [
-        'charts/camunda-platform-8.8/Chart.yaml',
-        'charts/camunda-platform-8.8/values*.yaml',
-        'charts/camunda-platform-8.8/go.*',
-      ],
-      matchUpdateTypes: [
-        'major',
         'minor',
-        'patch',
       ],
       pinDigests: false,
     },
+    // Chart versions batch (patch updates across all charts)
     {
-      groupName: 'camunda-platform-8.8-digest',
+      groupName: 'charts-patch-updates',
+      description: 'Batch all patch version updates across all chart versions into one PR',
+      addLabels: [
+        'deps/charts',
+        'upgrade:patch',
+      ],
+      matchFileNames: [
+        'charts/camunda-platform-*/Chart.yaml',
+        'charts/camunda-platform-*/values*.yaml',
+        'charts/camunda-platform-*/go.*',
+      ],
+      matchUpdateTypes: [
+        'patch',
+        'pin',
+      ],
+      pinDigests: false,
+    },
+    // Digest updates batch (across all charts)
+    {
+      groupName: 'charts-digest-updates',
+      description: 'Batch all digest updates across all chart versions into one PR',
       matchManagers: [
         'regex',
       ],
       addLabels: [
-        'version/8.8',
         'deps/charts',
+        'upgrade:digest',
       ],
       matchFileNames: [
-        'charts/camunda-platform-8.8/values-digest.yaml',
+        'charts/camunda-platform-*/values-digest.yaml',
       ],
       matchUpdateTypes: [
         'digest',
       ],
       pinDigests: true,
     },
-    {
-      groupName: 'camunda-platform-8.9',
-      addLabels: [
-        'version/8.9',
-        'deps/charts',
-      ],
-      matchFileNames: [
-        'charts/camunda-platform-8.9/Chart.yaml',
-        'charts/camunda-platform-8.9/values*.yaml',
-        'charts/camunda-platform-8.9/go.*',
-      ],
-      matchUpdateTypes: [
-        'major',
-        'minor',
-        'patch',
-      ],
-      pinDigests: false,
-    },
-    {
-      groupName: 'camunda-platform-8.9-digest',
-      matchManagers: [
-        'regex',
-      ],
-      addLabels: [
-        'version/8.9',
-        'deps/charts',
-      ],
-      matchFileNames: [
-        'charts/camunda-platform-8.9/values-digest.yaml',
-      ],
-      matchUpdateTypes: [
-        'digest',
-      ],
-      pinDigests: true,
-    },
-    // End of minor cycle chores.
+    // Major updates still separate (safety requires per-dependency review)
+    // These will NOT be grouped and require manual review via the major packageRule above
 
     //
     // Other groups.
