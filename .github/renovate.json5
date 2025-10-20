@@ -84,8 +84,9 @@
     //   matchUpdateTypes: ['pin', 'digest', 'patch'],
     //   schedule: ['* * * * 0'],
     // },
-    // Digest updates: add label and enable pinning, but group with patches
+    // Digest updates: add label and enable pinning, and group with patches
     {
+      groupName: 'patch-updates',
       matchUpdateTypes: ['digest'],
       addLabels: ['upgrade:digest'],
       pinDigests: true,
