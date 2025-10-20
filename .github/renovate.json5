@@ -27,14 +27,17 @@
   major: {
     enabled: true,
     addLabels: ['upgrade:major'],
+    // No groupName - each major gets its own PR
   },
   minor: {
     enabled: true,
     addLabels: ['upgrade:minor'],
+    groupName: 'minor-updates', // Group ALL minor updates together
   },
   patch: {
     enabled: true,
     addLabels: ['upgrade:patch'],
+    groupName: 'patch-updates', // Group ALL patch updates together
   },
   vulnerabilityAlerts: {
     addLabels: ['security'],
@@ -87,165 +90,52 @@
       schedule: ['* * * * 0'],
     },
     //
-    // Infraex-style batching: Group all chart versions by update type to reduce PR noise.
-    // This creates ~4 PRs total instead of ~12-14 per-chart PRs.
+    // Infraex-style batching: Global minor/patch grouping handles all updates.
+    // Category-specific labels and schedules below.
     //
-    // Chart versions batch (minor updates across all charts)
-    {
-      groupName: 'charts-minor-updates',
-      description: 'Batch all minor version updates across all charts into one PR',
-      addLabels: [
-        'deps/charts',
-        'upgrade:minor',
-      ],
-      matchFileNames: [
-        'charts/*/Chart.yaml',
-        'charts/*/values*.yaml',
-        'charts/*/go.*',
-      ],
-      matchUpdateTypes: [
-        'minor',
-      ],
-      pinDigests: false,
-    },
-    // Chart versions batch (patch updates across all charts)
-    {
-      groupName: 'charts-patch-updates',
-      description: 'Batch all patch version updates across all charts into one PR',
-      addLabels: [
-        'deps/charts',
-        'upgrade:patch',
-      ],
-      matchFileNames: [
-        'charts/*/Chart.yaml',
-        'charts/*/values*.yaml',
-        'charts/*/go.*',
-      ],
-      matchUpdateTypes: [
-        'patch',
-        'pin',
-      ],
-      pinDigests: false,
-    },
     // Digest updates batch (across all charts)
     {
-      groupName: 'charts-digest-updates',
-      description: 'Batch all digest updates across all charts into one PR',
-      matchManagers: [
-        'regex',
-      ],
-      addLabels: [
-        'deps/charts',
-        'upgrade:digest',
-      ],
-      matchFileNames: [
-        'charts/*/values-digest.yaml',
-      ],
+      groupName: 'digest-updates',
+      description: 'Batch all digest updates into one PR',
       matchUpdateTypes: [
         'digest',
+      ],
+      addLabels: [
+        'upgrade:digest',
       ],
       pinDigests: true,
     },
-    // Major updates still separate (safety requires per-dependency review)
-    // These will NOT be grouped and require manual review via the major packageRule above
-
+    // Charts - just add labels, global minor/patch grouping handles the rest
+    {
+      addLabels: [
+        'deps/charts',
+      ],
+      matchFileNames: [
+        'charts/*/Chart.yaml',
+        'charts/*/values*.yaml',
+        'charts/*/go.*',
+      ],
+    },
     //
-    // Tools.
+    // Tools - just add labels and schedule
     {
-      groupName: 'tool-versions-minor',
       addLabels: [
         'deps/tools',
-        'upgrade:minor',
       ],
       matchFileNames: [
         '.tool-versions',
       ],
-      matchUpdateTypes: [
-        'minor',
-      ],
       schedule: [
         'every weekend',
       ],
     },
-    {
-      groupName: 'tool-versions-patch',
-      addLabels: [
-        'deps/tools',
-        'upgrade:patch',
-      ],
-      matchFileNames: [
-        '.tool-versions',
-      ],
-      matchUpdateTypes: [
-        'patch',
-        'pin',
-        'digest',
-      ],
-      schedule: [
-        'every weekend',
-      ],
-    },
-    // Major tool updates get separate PRs (no groupName)
-    {
-      addLabels: [
-        'deps/tools',
-        'upgrade:major',
-      ],
-      matchFileNames: [
-        '.tool-versions',
-      ],
-      matchUpdateTypes: [
-        'major',
-      ],
-      schedule: [
-        'every weekend',
-      ],
-    },
-    {
-      groupName: 'github-actions-minor',
-      addLabels: [
-        'deps/github-actions',
-        'upgrade:minor',
-      ],
-      matchManagers: [
-        'github-actions',
-      ],
-      matchUpdateTypes: [
-        'minor',
-      ],
-      schedule: [
-        'every weekend',
-      ],
-    },
-    {
-      groupName: 'github-actions-patch',
-      addLabels: [
-        'deps/github-actions',
-        'upgrade:patch',
-      ],
-      matchManagers: [
-        'github-actions',
-      ],
-      matchUpdateTypes: [
-        'patch',
-        'pin',
-        'digest',
-      ],
-      schedule: [
-        'every weekend',
-      ],
-    },
-    // Major GitHub Actions updates get separate PRs (no groupName)
+    // GitHub Actions - just add labels and schedule
     {
       addLabels: [
         'deps/github-actions',
-        'upgrade:major',
       ],
       matchManagers: [
         'github-actions',
-      ],
-      matchUpdateTypes: [
-        'major',
       ],
       schedule: [
         'every weekend',
