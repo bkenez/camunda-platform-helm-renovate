@@ -385,7 +385,7 @@
       matchManagers: [
         'helmv3',
         'helm-values',
-        'custom.regex',
+        'regex',
       ],
       matchUpdateTypes: [
         'major',
