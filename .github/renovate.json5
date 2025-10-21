@@ -297,14 +297,6 @@
         'charts/camunda-platform-8.8/values*.yaml',
       ],
       matchUpdateTypes: ['major', 'minor', 'patch'],
-      // Ignore non-semver versions like 8.6.0-alpha3-rc3 which has a higher precedence than 8.6.0-alpha3
-      // which is not the case.
-      versionCompatibility: '^(?<version>\\d+.\\d+.\\d+(-alpha[1-9])?)(?<compatibility>.*)$',
-      // setting versioning to semver is important because by default docker versioning will
-      // assume that anything after the dash is a compatibility rather than a prerelease
-      // indicator. Some docker images have versions like 8.5.0-alpine but in camunda
-      // images, we use 8.5.0-alpha3.
-      versioning: 'semver',
       addLabels: ['camunda-platform', 'priority-high'],
     },
     {
@@ -324,8 +316,6 @@
         'charts/camunda-platform-8.8/values*.yaml',
       ],
       matchUpdateTypes: ['digest'],
-      versionCompatibility: '^(?<version>\\d+.\\d+.\\d+(-alpha[1-9])?)(?<compatibility>.*)$',
-      versioning: 'semver',
       addLabels: ['camunda-platform', 'priority-high'],
     },
     {
@@ -358,10 +348,6 @@
         'charts/camunda-platform-8.9/values*.yaml',
       ],
       matchUpdateTypes: ['major', 'minor', 'patch'],
-      // Ignore non-semver versions like 8.6.0-alpha3-rc3 which has a higher precedence than 8.6.0-alpha3
-      // which is not the case.
-      versionCompatibility: '^(?<version>\\d+.\\d+.\\d+(-alpha[1-9])?)(?<compatibility>.*)$',
-      versioning: 'semver',
       addLabels: ['camunda-platform', 'priority-high'],
     },
     {
@@ -380,8 +366,6 @@
         'charts/camunda-platform-8.9/values*.yaml',
       ],
       matchUpdateTypes: ['digest'],
-      versionCompatibility: '^(?<version>\\d+.\\d+.\\d+(-alpha[1-9])?)(?<compatibility>.*)$',
-      versioning: 'semver',
       addLabels: ['camunda-platform', 'priority-high'],
     },
     {
