@@ -61,14 +61,6 @@
   },
   packageRules: [
     {
-      groupName: 'camunda-platform-images',
-      matchPackagePatterns: ['/.*camunda.*/'],
-      matchDatasources: ['docker', 'helm', 'regex', 'github-tags'],
-      separateMajorMinor: false,
-      separateMinorPatch: false,
-      addLabels: ['camunda-platform', 'priority-high'],
-    },
-    {
       description: 'Major updates require manual review to prevent breaking changes.',
       matchUpdateTypes: ['major'],
       automerge: false,
@@ -339,6 +331,14 @@
       // which is not the case.
       versionCompatibility: '^(?<version>\\d+.\\d+.\\d+(-alpha[1-9])?)(?<compatibility>.*)$',
       versioning: 'semver',
+    },
+    {
+      groupName: 'camunda-platform-images',
+      matchPackagePatterns: ['/.*camunda.*/'],
+      matchDatasources: ['docker', 'helm', 'regex', 'github-tags'],
+      separateMajorMinor: false,
+      separateMinorPatch: false,
+      addLabels: ['camunda-platform', 'priority-high'],
     },
     {
       matchFileNames: [
