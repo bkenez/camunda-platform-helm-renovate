@@ -37,6 +37,11 @@
     addLabels: ['upgrade:patch'],
     groupName: 'patch-updates',
   },
+  digest: {
+    enabled: true,
+    addLabels: ['upgrade:digest'],
+    groupName: 'patch-updates',
+  },
   vulnerabilityAlerts: {
     addLabels: ['security'],
     enabled: true,
