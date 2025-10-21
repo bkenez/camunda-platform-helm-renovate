@@ -277,6 +277,7 @@
     // General.
     {
       enabled: true,
+      groupName: 'camunda-platform-images',
       matchPackageNames: [
         '/.*camunda.*/',
       ],
@@ -298,6 +299,7 @@
       // indicator. Some docker images have versions like 8.5.0-alpine but in camunda
       // images, we use 8.5.0-alpha3.
       versioning: 'semver',
+      addLabels: ['camunda-platform', 'priority-high'],
     },
     {
       // Limit alpha chart version to alpha tags only.
@@ -315,6 +317,7 @@
     },
     {
       enabled: true,
+      groupName: 'camunda-platform-images',
       matchPackageNames: [
         '/.*camunda.*/',
       ],
@@ -331,13 +334,6 @@
       // which is not the case.
       versionCompatibility: '^(?<version>\\d+.\\d+.\\d+(-alpha[1-9])?)(?<compatibility>.*)$',
       versioning: 'semver',
-    },
-    {
-      groupName: 'camunda-platform-images',
-      matchPackagePatterns: ['/.*camunda.*/'],
-      matchDatasources: ['docker', 'helm', 'regex', 'github-tags'],
-      separateMajorMinor: false,
-      separateMinorPatch: false,
       addLabels: ['camunda-platform', 'priority-high'],
     },
     {
