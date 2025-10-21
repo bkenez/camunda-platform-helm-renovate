@@ -89,14 +89,6 @@
       matchUpdateTypes: ['pin', 'digest', 'patch'],
       schedule: ['* * * * 0'],
     },
-    // Digest updates get their own group
-    {
-      groupName: 'digest-updates',
-      matchUpdateTypes: ['digest'],
-      addLabels: ['upgrade:digest'],
-      pinDigests: true,
-    },
-    // Category labels for better PR organization
     {
       addLabels: ['deps/charts'],
       matchFileNames: [
