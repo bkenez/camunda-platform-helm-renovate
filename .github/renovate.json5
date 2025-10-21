@@ -61,12 +61,6 @@
   },
   packageRules: [
     {
-      groupName: 'camunda-platform-images',
-      matchPackagePatterns: ['/.*camunda.*/'],
-      matchDatasources: ['docker', 'helm', 'regex', 'github-tags'],
-      addLabels: ['camunda-platform', 'priority-high'],
-    },
-    {
       description: 'Major updates require manual review to prevent breaking changes.',
       matchUpdateTypes: ['major'],
       automerge: false,
