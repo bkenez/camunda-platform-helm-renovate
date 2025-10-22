@@ -17,7 +17,7 @@
   separateMajorMinor: false,
   separateMinorPatch: false,
   ignoreTests: false,
-  prCreation: 'immediate',
+  prCreation: 'not-pending',
   prBodyNotes: [
     '{{#if isMajor}}:warning: THIS IS A MAJOR VERSION UPDATE :warning:{{/if}}',
     'Before merging, *always* check with the release notes if any other changes need to be done.',
