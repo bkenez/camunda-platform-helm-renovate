@@ -375,6 +375,8 @@
         '.github/actions/*',
         'charts/**',
       ],
+      // Don't automerge major updates - those need manual review
+      excludeUpdateTypes: ['major'],
       addLabels: [
         'automerge',
         'automation/renovatebot',
