@@ -17,7 +17,7 @@
   separateMajorMinor: false,
   separateMinorPatch: false,
   ignoreTests: false,
-  prCreation: 'not-pending',
+  prCreation: 'immediate',
   prBodyNotes: [
     '{{#if isMajor}}:warning: THIS IS A MAJOR VERSION UPDATE :warning:{{/if}}',
     'Before merging, *always* check with the release notes if any other changes need to be done.',
@@ -375,7 +375,6 @@
         '.github/actions/*',
         'charts/**',
       ],
-      // Only automerge minor, patch, pin, and digest updates - NOT major
       matchUpdateTypes: ['minor', 'patch', 'pin', 'digest'],
       addLabels: [
         'automerge',
