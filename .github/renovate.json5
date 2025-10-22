@@ -375,8 +375,8 @@
         '.github/actions/*',
         'charts/**',
       ],
-      // Don't automerge major updates - those need manual review
-      excludeUpdateTypes: ['major'],
+      // Only automerge minor, patch, pin, and digest updates - NOT major
+      matchUpdateTypes: ['minor', 'patch', 'pin', 'digest'],
       addLabels: [
         'automerge',
         'automation/renovatebot',
